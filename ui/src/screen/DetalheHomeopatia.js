@@ -1,7 +1,8 @@
 import React from 'react'
 import {View, Text, StyleSheet } from 'react-native'
 
-const DetalheHomeopatia = ({ homeopatia }) => {
+const DetalheHomeopatia = ({ route, navigation }) => {   
+    const homeopatia = route.params
     return <View style={styles.container}>        
         <Text style={styles.bloco} >
             <Text style={styles.titulo}>
@@ -40,13 +41,15 @@ const DetalheHomeopatia = ({ homeopatia }) => {
 
 const styles = StyleSheet.create({
     container:{
-        marginLeft: 20,
+        alignContent: 'space-around',
         flexDirection: 'column',
-        flexWrap: 'wrap'
+        flex: 1
     },
     bloco:{
         flex:1,
-        flexDirection:'row'
+        flexDirection:'row',
+        height:200,
+        width: 200
     },
     titulo:{
         flex:2,

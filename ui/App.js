@@ -10,7 +10,10 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home' screenOptions={{title: 'Registro de Homeopatias'}}>
         <Stack.Screen name="Home" >
-          {(pros) => <HomeScreen {...props} extraData={someData} />}
+          {(props) => {
+            const someData = {'test':"testing :)"}
+            return <HomeScreen {...props} extraData={someData} />
+          }}
         </Stack.Screen>
         <Stack.Screen name="DetalheHomeopatia" component={DetalheHomeopatia} />
       </Stack.Navigator>
