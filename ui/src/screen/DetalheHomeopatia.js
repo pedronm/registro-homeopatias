@@ -25,7 +25,7 @@ const DetalheHomeopatia = ({ route, navigation }) => {
                 Dinamizacao:
             </Text>
             <Text style={styles.texto}>
-                {homeopatia.tipoDinamo}
+                {homeopatia.dinamizacao}
             </Text>
         </Text>
         <Text style={styles.bloco} >
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     },
     texto:{
         flex:1,
-        fontSize: 16
+        fontSize: 20
     }
 })
 

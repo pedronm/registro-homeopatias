@@ -16,7 +16,7 @@ const ListaReceitas = ({registros, nav}) => {
             renderItem= {({item}) => {  
                return <View style={styles.containerReceita}>
                 <Text style={styles.nomePaciente}>{item.paciente}</Text>
-                <Button title='Cadastrar nova Homeopatia' />
+                <Button title='Cadastrar nova Homeopatia' onPress={() => nav.navigate('CadastroHomeopatia')}/>
                 <FlatList            
                     horizontal
                     showsHorizontalScrollIndicator={false}
