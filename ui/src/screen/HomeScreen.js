@@ -1,117 +1,85 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext } from 'react'
+import { Context as ReceitaContext} from './../context/ReceitasContext'
 import {View, Text, StyleSheet } from 'react-native'
-import { StatusBar } from 'expo-status-bar';
-import ListaReceitas from '../components/ListaReceitas'
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({navigation : {navigate}}) => {
 
-    const [receitas, setReceitas] = useState([])
-
-    useEffect(
-        () => {
-            setReceitas([
-                {
-                    id: 1,
-                    paciente: 'Mauricio Lima',
-                    homeopatias: [
-                        {
-                            id: 1,
-                            descricao: 'Abacateiro',
-                            posologia: '2 gotas por dia',
-                            dinamizacao: 'dm',
-                            dinamo: '50'
-                        },
-                        {    
-                            id: 2,
-                            descricao: 'Abies nigra',
-                            posologia: '2 gotas por dia',
-                            dinamizacao: 'dm',
-                            dinamo: '12'
-                        },
-                        {
-                            id: 3,
-                            descricao: 'aceticum acidum',
-                            posologia: '2 gotas por dia',
-                            dinamizacao: 'dm',
-                            dinamo: '6'
-                        }
-                    ]
-                }, 
-                {
-                    id: 2,
-                    paciente: 'Marcia Costa',
-                    homeopatias: [
-                        {
-                            id: 1,
-                            descricao: 'Abacateiro',
-                            posologia: '2 gotas por dia',
-                            dinamizacao: 'dm',
-                            dinamo: '50'
-                        },
-                        {    
-                            id: 2,
-                            descricao: 'Abies nigra',
-                            posologia: '2 gotas por dia',
-                            dinamizacao: 'dm',
-                            dinamo: '12'
-                        },
-                        {
-                            id: 3,
-                            descricao: 'aceticum acidum',
-                            posologia: '2 gotas por dia',
-                            dinamizacao: 'dm',
-                            dinamo: '6'
-                        }
-                    ]
-                }, 
-                {
-                    id: 3,
-                    paciente: 'Jenifer Barbosa',
-                    homeopatias: [
-                        {
-                            id: 1,
-                            descricao: 'Abacateiro',
-                            posologia: '2 gotas por dia',
-                            dinamizacao: 'dm',
-                            dinamo: '50'
-                        },
-                        {    
-                            id: 2,
-                            descricao: 'Abies nigra',
-                            posologia: '2 gotas por dia',
-                            dinamizacao: 'dm',
-                            dinamo: '12'
-                        },
-                        {
-                            id: 3,
-                            descricao: 'aceticum acidum',
-                            posologia: '2 gotas por dia',
-                            dinamizacao: 'dm',
-                            dinamo: '6'
-                        }
-                    ]
-                }, 
-            ])
-        }, []
-    )
+    {Context} = useContext(ReceitaContext)
 
     return (
-        <View style={styles.container}>
-            {
-                receitas.length > 0
-                ? <ListaReceitas  registros={receitas} nav={navigation} />
-                : <Text>Sem Receitas!</Text>
-            }
-          <StatusBar style="auto" />
+        <View >
+            <FlatList
+            style={styles.lista}
+            vertical            
+            showsVerticalScrollIndicator={false}
+            data={registros}
+            keyExtractor={(item) => item.id}
+            renderItem= {({item}) => {  
+               return <View style={styles.containerReceita}>
+                    <Text style={styles.nomePaciente}>{item.paciente}</Text>
+                    <Button title='Cadastrar nova Homeopatia' onPress={() => navigate('CadastroHomeopatia')}/>
+                    <FlatList            
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        data={item.homeopatias}
+                        keyExtractor= {(homeopatia) => homeopatia.id}
+                        renderItem= { ({item}) => {
+                            return <TouchableOpacity style={styles.containerItemLista} 
+                                onPress={
+                                    () => {
+                                        navigate('DetalheHomeopatia', item)
+                                    }
+                                }>
+                                <Text style={styles.nomeHomeopatia}>
+                                    {item.descricao}
+                                </Text>
+                                <Text style={styles.posologia}>{item.posologia}</Text>
+                            </TouchableOpacity> 
+                        }}
+                    />
+                </View>
+            }}/>
         </View>
       );    
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
+    container:{
+        marginBottom: 5,
+        marginHorizontal: 25
     },
+    containerReceita:{
+        marginVertical: 18,
+        marginHorizontal: 14,
+        padding: 20,
+        borderColor: 'black',
+        borderRadius: 3,
+        borderLeftWidth: 2
+    },
+    nomePaciente:{
+        fontWeight: 'bold',
+        fontSize: 22,
+        marginLeft: 5,
+        marginVertical: 10
+    },
+    containerItemLista:{
+        backgroundColor: 'rgba(255, 150, 105, .3)',
+        padding: 8,
+        borderRadius: 5,
+        marginHorizontal: 10,
+        marginVertical: 10,
+        height: 70,
+        flexDirection: 'column'
+    },
+    nomeHomeopatia:{
+        fontSize: 16,
+        flex:1
+    },
+    posologia:{
+        fontSize:8,
+        flex:1
+
+    }
   });
 
 export default HomeScreen
