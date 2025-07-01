@@ -9,7 +9,9 @@ export default (reducer, actions, initialState) => {
 
         const acoesVinculadas = {}
 
-        for(let key of actions){
+        // Ele não enxerga as propriedaes como algo "iterável" logo ele não faz
+        // o For sem erro a não ser que veja como Propriedades
+        for(let key of Object.keys(actions)){
             acoesVinculadas[key] = actions[key](dispatch)
         }
 

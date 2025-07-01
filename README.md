@@ -1,6 +1,17 @@
 # Registro de Homeopatias
 Projeto filantropico construído para auxiliar em processo de atendimento da Cabana do Pai Miguel das Almas
 
+# Notas
+
+  Tomar cuidado com ReacNative:
+
+    Altamente sucetível a callback hell
+    LOGAR tudo que for possível pelos steps do fluxo da aplicação, uso de contextos é muito error prone principalmente em complexidades elevadas.*1
+
+
+    *1: corrigi um erro simplesmente por corrigir import/export e nomenclatura
+        mas nenhum log referia a esses erros 🤦‍♂️
+
 # Tecnolgoias utilizadas
 
 1. React Native

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ui",
-    "slug": "ui",
+    "name": "registro-de-homeopatias",
+    "slug": "registro-de-homeopatias",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.pedromoraes.registrodehomeopatias"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "4393ed79-550b-4f0a-8327-8795683c4fd5"
+      }
     }
   }
 }
