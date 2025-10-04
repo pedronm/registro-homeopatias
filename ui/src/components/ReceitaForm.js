@@ -4,6 +4,7 @@ import {useNavigation } from '@react-navigation/native'
 import {View, Text, TextInput, StyleSheet, Button, FlatList, TouchableOpacity} from 'react-native'
 import SelecionaData from './SelecionaData';
 import {Context as HomeopatiaContext, Provider as HomeopatiaProvider } from '../context/HomeopatiaContext'
+import {formatDate} from './../utils/dateUtil';
 
 const ReceitaForm = ({onSubmit, initialValues, isEditing, navigation}) => {
     
@@ -21,9 +22,14 @@ const ReceitaForm = ({onSubmit, initialValues, isEditing, navigation}) => {
         <View>
             <View>
                 <Text style={styles.campoData}>
-                    Data selecionada: {dtCriacao ? dtCriacao.format('DD/MM/YYYY') : 'sem data'}</Text>
+                    Data selecionada: {formatDate(dtCriacao)}
+                </Text>
             </View>
-            <SelecionaData onDataSelecionada={ (dataSelecionada) => setDtCriacao(dataSelecionada)}></SelecionaData>
+            <SelecionaData onDataSelecionada={ (dataSelecionada) => {
+                    console.log('Data selecionada no form de receita: ' + formatDate(dataSelecionada) )
+                    setDtCriacao(dataSelecionada)
+                }
+            }></SelecionaData>
         </View>
         { isEditing ?    <>
             <HomeopatiaProvider>
@@ -65,7 +71,8 @@ ReceitaForm.defaultProps = {
     initialValues: {
         id: '',
         nome : '',
-        homeopatias: []
+        homeopatias: [],
+        dtCriacao: Date()
     }
 }
 

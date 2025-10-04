@@ -71,9 +71,7 @@ const PacienteForm = ({ onSubmit, initialValues, isEditing, navigation }) => {
                 ) : null}
                 <Button title={isEditing ? 'Salvar Paciente' : 'Incluir Paciente'} onPress={() => {
                     console.log("nome antes de enviar o form", nome);
-                    editarPaciente(id, nome, () => {
-                        nav.pop('Home', { isRefreshing: true });
-                    });
+                    onSubmit(nome, id, onSubmit, isEditing, navigation);
                 }} />
             </View>
     );

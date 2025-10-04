@@ -4,12 +4,11 @@ import DateTimePicker from 'react-native-ui-datepicker';
 import dayjs from 'dayjs';
 
 const SelecionaData = ({onDataSelecionada}) => {
-  const [date, setDate] = useState(dayjs());
+  const [date, setDate] = useState(new Date());
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleDateChange = (selectedDate) => {
-    setDate(selectedDate);
-    // study the output but 
+    setDate(selectedDate);        
     const jsDate = dayjs(selectedDate).toDate();
     onDataSelecionada(jsDate);
     setModalVisible(false);

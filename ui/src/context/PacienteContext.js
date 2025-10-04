@@ -75,19 +75,8 @@ const getPorPagina = dispatch => {
     }
 }
 
-// Esse aqui é pra quando for trabalhart com o backend!
-// const getPaciente = dispatch => async () => {
-//     try {
-//         // const response = await api.get(`/pacientes?page=${page}`)
-//         // console.log(response)
-//         const 
-//         dispatch({ type: 'get_pacientes', payload: response.data })
-//     } catch (err) {
-//         console.error(err)
-//     }
-// }
-
 const addPaciente = dispatch => {
+    console.log('entrou no add paciente')
     return async (nome, callback) => {
 
         console.log('Nome a ser gravado, antes do manipula dados', nome)
@@ -105,6 +94,7 @@ const addPaciente = dispatch => {
 }
 
 const editarPaciente = dispatch => {
+    console.log('entrou no editar paciente')
     return async (id, nome, callback ) => {
         const {doc, error} = await manipulaDados.update('pacientes', {id, nome})
         if(error.hasError){

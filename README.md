@@ -1,9 +1,18 @@
 # Registro de Homeopatias
 Projeto filantropico construído para auxiliar em processo de atendimento da Cabana do Pai Miguel das Almas
 
+# Development
+
+- Mantendo usuário <span style="color: green;">[OK]</span>
+- Manter consulta <span style="color: orange;">[ In Process ] </span>
+  - Incluir data da receita <span style="color: green;">[ok]
+  - Dados da receita <span style="color: orange;"> [In Process]
+
+  
+
 # Notas
 
-  Tomar cuidado com ReacNative:
+  Tomar cuidado com ReactNative:
 
     Altamente sucetível a callback hell
     LOGAR tudo que for possível pelos steps do fluxo da aplicação, uso de contextos é muito error prone principalmente em complexidades elevadas.*1
@@ -15,7 +24,7 @@ Projeto filantropico construído para auxiliar em processo de atendimento da Cab
 # Tecnolgoias utilizadas
 
 1. React Native
-2. Spring
+2. Spring [Analisando o bakcend ainda]
 3. Expo
 
 # Requistos para execução do projeto
