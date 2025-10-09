@@ -8,7 +8,7 @@ import { Feather } from '@expo/vector-icons';
 const PacienteForm = ({ onSubmit, initialValues, isEditing, navigation }) => {
     const { receitaState, removerReceita } = useContext(ReceitaContext);
     const { editarPaciente } = useContext(PacienteContext);
-    const [id, setId] = useState(initialValues.id);
+    const [id, _] = useState(initialValues.id);
     const [nome, setNome] = useState(initialValues.nome);
     const nav = useNavigation();
 
@@ -25,7 +25,6 @@ const PacienteForm = ({ onSubmit, initialValues, isEditing, navigation }) => {
                     <>
                         <ReceitaProvider>
                             <Button title={'Adicionar Receita'} onPress={() => {
-                                console.log('Antes de enviar pro formulario da Receita' + initialValues.id);
                                 nav.navigate('CadastroReceita', initialValues.id);
                             }}></Button>
 
@@ -36,7 +35,7 @@ const PacienteForm = ({ onSubmit, initialValues, isEditing, navigation }) => {
                                 renderItem={({ item }) => {
                                     return (
                                         <TouchableOpacity onPress={() => {
-                                            nav.navigate('EditarPaciente', item.id);
+                                            nav.navigate('EditarReceita', item.id);
                                         }}>
                                             <View style={styles.containerReceita}>
                                                 <Text style={styles.labelDataReceita}>{item.dataCriacao}</Text>

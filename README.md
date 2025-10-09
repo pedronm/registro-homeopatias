@@ -3,10 +3,15 @@ Projeto filantropico construído para auxiliar em processo de atendimento da Cab
 
 # Development
 
-- Mantendo usuário <span style="color: green;">[OK]</span>
-- Manter consulta <span style="color: orange;">[ In Process ] </span>
-  - Incluir data da receita <span style="color: green;">[ok]
-  - Dados da receita <span style="color: orange;"> [In Process]
+- <span style="color: green;"> Mantendo usuário :white_check_mark:</span>
+- <span style="color: orange;"> Manter consulta :construction: </span>
+  - <span style="color: green;"> Incluir data da receita :white_check_mark:
+  - <span style="color: green;"> Dados da receita  :white_check_mark:
+  - <span style="color: orange;"> Inserir Homeopatia, depende de outra tarefa  [In Process]
+- <span style="color: orange;"> Manter homeopatia  :construction:
+
+- Recuros de reutilização
+  - Alerta de perda de dados ao salvar. <span style="color: green;"> :white_check_mark:
 
   
 

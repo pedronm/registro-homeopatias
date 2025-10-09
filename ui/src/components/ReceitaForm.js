@@ -1,69 +1,64 @@
 
 import React, {useContext, useEffect, useState, } from 'react'
 import {useNavigation } from '@react-navigation/native'
-import {View, Text, TextInput, StyleSheet, Button, FlatList, TouchableOpacity} from 'react-native'
+import {View, Text, TextInput, StyleSheet, Button, FlatList, TouchableOpacity, Alert, BackHandler} from 'react-native'
 import SelecionaData from './SelecionaData';
 import {Context as HomeopatiaContext, Provider as HomeopatiaProvider } from '../context/HomeopatiaContext'
 import {formatDate} from './../utils/dateUtil';
+import { useBackHandlerWithAlert } from '../hooks/navigatingHelper';
 
 const ReceitaForm = ({onSubmit, initialValues, isEditing, navigation}) => {
     
     const [id, setId] = useState(initialValues.id)
     const [dtCriacao, setDtCriacao] = useState(initialValues.dtCriacao)
     const [homeopatias, setHomeopatias] = useState(initialValues.homeopatias)
+    const {state, addHomeopatia, excluirHomeopatia} = useContext(HomeopatiaContext)
     const nav = useNavigation()
 
-    const {state, addHomeopatia, excluirHomeopatia} = useContext(HomeopatiaContext)
-
-    console.log(' Valores inciais do Formulario de Receita '  + JSON.stringify(initialValues))
+    useBackHandlerWithAlert(navigation)
 
     return <View>
         <Text>Data de registro da receita: </Text>
-        <View>
+        <View>                        
             <View>
                 <Text style={styles.campoData}>
-                    Data selecionada: {formatDate(dtCriacao)}
+                    Alterar Data: { dtCriacao ? formatDate(dtCriacao) : 'Não informada' }
                 </Text>
             </View>
-            <SelecionaData onDataSelecionada={ (dataSelecionada) => {
-                    console.log('Data selecionada no form de receita: ' + formatDate(dataSelecionada) )
-                    setDtCriacao(dataSelecionada)
-                }
-            }></SelecionaData>
-        </View>
-        { isEditing ?    <>
-            <HomeopatiaProvider>
+                <SelecionaData onDataSelecionada={ (dataSelecionada) => {
+                        setDtCriacao(dataSelecionada)
+                    }
+                }></SelecionaData>
 
-                <Button title={'Edita Receita'} onPress={() => {
-                        console.log('Antes de enviar pro formulario de homeopatia' + initialValues.id)
-                        nav.navigate('EditarListaHomeopatia', initialValues.id)
-                    } }></Button>
-                
-                <FlatList
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    data={initialValues.homeopatias}
-                    keyExtractor={(homeopatia) => homeopatia.id}
-                    renderItem={({ item }) => {
-                        return <TouchableOpacity style={styles.containerItemLista}
-                            onPress={
-                                () => {
-                                    navigate('DetalheHomeopatia', item)
-                                }
-                            }>
-                            <View >
-                                <Text style={styles.tituloHomeopatia}>
-                                    {item.descricao + ' ' + item.dinamizacao + item.dinamo  }
-                                </Text>
-                                <Text style={styles.subtituloHomeopatia}>{item.posologia}</Text>
-                            </View>
-                        </TouchableOpacity>
-                    }}
-                    /> 
-            </HomeopatiaProvider>
-        </>
-        : null}
-        <Button title={isEditing ? 'Salvar' : 'Incluir'} onPress={() => onSubmit(dtCriacao)}/>
+        </View>
+        { isEditing ? ( 
+            <>
+                    <Button title='Adicionar Homeopatia' onPress={ () => {
+                        console.log('Navegando para tela de cadastro de homeopatia, passando id da receita: ' + id)
+                        navigation.navigate('CadastroHomeopatia', {idReceita: id})
+                    }}></Button>
+                    <FlatList
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        data={initialValues.homeopatias}
+                        keyExtractor={(homeopatia) => homeopatia.id}
+                        renderItem={({ item }) => {
+                            return <TouchableOpacity style={styles.containerItemLista}
+                                onPress={
+                                    () => {
+                                        navigate('DetalheHomeopatia', item)
+                                    }
+                                }>
+                                <View >
+                                    <Text style={styles.tituloHomeopatia}>
+                                        {item.descricao + ' ' + item.dinamizacao + item.dinamo  }
+                                    </Text>
+                                    <Text style={styles.subtituloHomeopatia}>{item.posologia}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        }}
+                    />
+            </>) : null }
     </View>
 }
 
@@ -72,7 +67,7 @@ ReceitaForm.defaultProps = {
         id: '',
         nome : '',
         homeopatias: [],
-        dtCriacao: Date()
+        dtCriacao: null
     }
 }
 

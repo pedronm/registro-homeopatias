@@ -13,14 +13,14 @@ const EditarReceitaScreen = ({route, navigation}) => {
     console.log('receita que está na tela, e que veio carregada', receita)
     
     return <View>
-        <Text>{'Id em edição ' + id}</Text>
+        {/* <Text>{'Id em edição ' + id}</Text>
         <PacienteForm
             isEditing={true}
             initialValues={{id: id, nome: receita.nome, homeopatias: receita.homeopatias}}
             onSubmit={ (nome) => 
                 editarListaHomeopatia(id, nome, () => {navigation.pop()})
             }
-        />
+        /> */}
     </View>
 }
 
