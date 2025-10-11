@@ -20,12 +20,10 @@ export const receitaReducer = (state, action) => {
 
 const addReceita = dispatch => {
   return async (pacienteId, receita) => {
-    console.log(`Id do paciente ${pacienteId} e payload da receita ${receita}`)
     try {
       if (pacienteId && receita) {
         // Attach the pacienteId to the receita object
         const payload = {  pacienteId, receita };
-        console.log(payload)
         const { doc, error } = await manipulaDados.persist('receita', payload);
 
         if (!error.hasError) {

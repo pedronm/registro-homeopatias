@@ -1,9 +1,10 @@
 
 import React, {useContext, useEffect, useState, } from 'react'
 import {useNavigation } from '@react-navigation/native'
-import {View, Text, TextInput, StyleSheet, Button, FlatList, TouchableOpacity, Alert, BackHandler} from 'react-native'
+import {View, Text, TextInput, StyleSheet, Button, FlatList, TouchableOpacity, Alert, BackHandler, Platform} from 'react-native'
 import SelecionaData from './SelecionaData';
 import {Context as HomeopatiaContext, Provider as HomeopatiaProvider } from '../context/HomeopatiaContext'
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import {formatDate} from './../utils/dateUtil';
 import { useBackHandlerWithAlert } from '../hooks/navigatingHelper';
 
@@ -14,10 +15,39 @@ const ReceitaForm = ({onSubmit, initialValues, isEditing, navigation}) => {
     const [homeopatias, setHomeopatias] = useState(initialValues.homeopatias)
     const {state, addHomeopatia, excluirHomeopatia} = useContext(HomeopatiaContext)
     const nav = useNavigation()
+    const adaptableAlert = (e) => Platform.OS === 'web' ? alertWeb(e) : alertMobile(e)
 
-    useBackHandlerWithAlert(navigation)
+    //useBackHandlerWithAlert(navigation,{alerta: Alert, backHandler: BackHandler, useEffect: useEffect})
+    const alertWeb = async (e) => {
+        console.log('Alerta web disparado')
+      const response = await window.confirm("Atenção! Se sair perderá dados não salvos!")
+      if (response) {
+        nav.dispatch(e.data.action)
+      }
+    }
+    const alertMobile = (e) => {   
+        console.log("alerta mobile")
+        Alert.alert(
+            'Atenção',
+            'Se sair agora, perderá os dados não salvos. Deseja sair mesmo assim?',
+            [
+                {text: 'Não', style: 'cancel', onPress: () => {}},
+                {text: 'Sim', style: 'destructive', onPress: () => nav.dispatch(e.data.action)}
+            ]
+        )
 
-    return <View>
+    }
+
+    useEffect( () => {
+        const listener = nav.addListener('beforeRemove', (e) => {
+            e.preventDefault()
+            console.log('Tentativa de navegação detectada, exibindo alerta')
+            adaptableAlert(e)        
+        })
+        return () => nav.removeListener('beforeRemove', listener)
+    }, [])
+
+    return <SafeAreaProvider><SafeAreaView>
         <Text>Data de registro da receita: </Text>
         <View>                        
             <View>
@@ -29,7 +59,9 @@ const ReceitaForm = ({onSubmit, initialValues, isEditing, navigation}) => {
                         setDtCriacao(dataSelecionada)
                     }
                 }></SelecionaData>
-
+                <Button title='Cadastrar Receita' onPress={ () => {
+                    onSubmit(id, dtCriacao)                        
+                }}></Button>
         </View>
         { isEditing ? ( 
             <>
@@ -59,7 +91,7 @@ const ReceitaForm = ({onSubmit, initialValues, isEditing, navigation}) => {
                         }}
                     />
             </>) : null }
-    </View>
+    </SafeAreaView></SafeAreaProvider>
 }
 
 ReceitaForm.defaultProps = {

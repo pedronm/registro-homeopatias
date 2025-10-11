@@ -11,7 +11,7 @@ const CadastroReceitaScreen = ({route, navigation: { navigate }}) => {
     
     return <View>
         <ReceitaForm onSubmit={ (dataSelecionada) => {
-          addReceita(id, dataSelecionada, () => navigate('Home') )
+          addReceita(id, dataSelecionada, () => navigate.pop() )
         }}/>
       </View>
 }
